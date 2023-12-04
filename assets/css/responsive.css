@@ -1,0 +1,16 @@
+@media (max-width: 1000px) {
+    .col-5 { flex: 0 0 100%; }
+    .col-7 { flex: 0 0 100%; }
+    .form-background{ 
+        padding-bottom: 30px;
+    }
+}
+@media (max-width: 500px) {
+    #form-header h1 {
+        font-size: 20px;
+    }
+    input[type="text"],input[type="button"]{
+        font-size: 14px;
+        height: 32px;
+    }
+}

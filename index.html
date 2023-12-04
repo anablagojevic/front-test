@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Add User</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row"> 
+        <div class="col col-1"></div> 
+        <div class="col col-10">
+          <div class="row margin-top"> 
+            <div class="col col-5 form-background">   
+                    <div class="col col-12" id="form-header">
+                        <h1>User Details</h1>
+                    </div>
+                    <form>
+                      <div class="row flex-center margin-top">
+                        <div class="col col-10">
+                            <div class="row flex-between">
+                                <div class="col col-5">
+                                    <div class="error-message"><p></p></div>
+                                    <input type="text" placeholder="First Name" id="firstName"/>
+                                </div>
+                                <div class="col col-5 ">
+                                    <div class="error-message"><p></p></div>
+                                    <input type="text" placeholder="Last Name" id="lastName"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-10 ">
+                            <div class="error-message"><p></p></div>
+                            <input type="text" placeholder="Street / Number" id="address"/>
+                        </div>
+                        <div class="col col-10 ">
+                            <div class="error-message"><p></p></div>
+                            <input type="text" placeholder="City" id="city"/>
+                        </div>
+                        <div class="col col-10 ">
+                            <div class="error-message"><p></p></div>
+                            <input type="text" placeholder="Country" id="country"/>
+                        </div>
+                        <div class="col col-10">
+                            <input type="button" value="Add User" id="btnSubmit"/>
+                            <div class="success-message"></div>
+                        </div>
+                    </div>
+                    </form>
+            </div>
+            <div class="col col-7" id="map">
+                
+            </div>
+            <div class="col col-12" id="link-button">
+              <h2><a href="users.html">See all users</a></h2>
+            </div>
+          </div>
+        </div> 
+        <div class="col col-1"></div> 
+    </div>
+    
+  </div> 
+  <script src="assets/js/main.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHksoiJjnL4DIV2kruTb_0-5eahWkeyks&callback=initMap" 
+    async defer></script> 
+    <script>
+      var map;
+      var marker;
+    
+      function initMap() {
+        var myLatLng = { lat: 40.712776, lng: -74.005974 }; 
+    
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 8
+        });
+    
+        marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+    
+        var addressInput = document.getElementById("address");
+        var cityInput = document.getElementById("city");
+        var countryInput = document.getElementById("country");
+    
+        addressInput.addEventListener("keyup", updateMap);
+        cityInput.addEventListener("keyup", updateMap);
+        countryInput.addEventListener("keyup", updateMap);
+      }
+    
+      function updateMap() {
+        var address = document.getElementById("address").value;
+        var city = document.getElementById("city").value;
+        var country = document.getElementById("country").value;
+    
+        if (address && city && country) {
+          var fullAddress = address + ", " + city + ", " + country;
+    
+          var geocoder = new google.maps.Geocoder();
+          geocoder.geocode({ address: fullAddress }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+              var latlng = results[0].geometry.location;
+    
+              map.setCenter(latlng);
+              marker.setPosition(latlng);
+            }
+          });
+        }
+      }
+    </script>
+</body>
+</html>
